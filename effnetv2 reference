@@ -1,0 +1,30 @@
+# Construct an EfficientNetV2 from a preset:
+efficientnet = keras_cv.models.EfficientNetV2Backbone.from_preset(
+    "efficientnetv2_s"
+)
+images = tf.ones((1, 256, 256, 3))
+outputs = efficientnet.predict(images)
+
+# Alternatively, you can also customize the EfficientNetV2 architecture:
+model = EfficientNetV2Backbone(
+    stackwise_kernel_sizes=[3, 3, 3, 3, 3, 3],
+    stackwise_num_repeats=[2, 4, 4, 6, 9, 15],
+    stackwise_input_filters=[24, 24, 48, 64, 128, 160],
+    stackwise_output_filters=[24, 48, 64, 128, 160, 256],
+    stackwise_expansion_ratios=[1, 4, 4, 4, 6, 6],
+    stackwise_squeeze_and_excite_ratios=[0.0, 0.0, 0, 0.25, 0.25, 0.25],
+    stackwise_strides=[1, 2, 2, 2, 1, 2],
+    stackwise_conv_types=[
+        "fused",
+        "fused",
+        "fused",
+        "unfused",
+        "unfused",
+        "unfused",
+    ],
+    width_coefficient=1.0,
+    depth_coefficient=1.0,
+    include_rescaling=False,
+)
+images = tf.ones((1, 256, 256, 3))
+outputs = efficientnet.predict(images
